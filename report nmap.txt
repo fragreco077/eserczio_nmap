@@ -1,0 +1,14 @@
+-Con   nmap -sT 192.168.50.101 , si è fatta la scan delle porte TCP per quanto riguarda la metaspoitable,e ci mostra le varie porte aperte e ci dice che 977 porte TCP sono chiuse
+
+-Con sudo nmap -sS 192.168.50.101 ,si è fatta la scan SYN , e essendo che la connessione 3wayhandshake non è stata completata , ce lo indica con la riga
+Not shown :977 closed tcp ports (reset).
+Infatti con questo tipo di scan , nmap vede verifica quali porte sono aperte senza finire la connessione,mandando quindi come risposta i pacchetti RESET
+
+-Con nmap -sV 192.168.50.101 , si è avviata la scansione Version detection, che oltre a restituirci le porte aperte ci indica la versione dei protocolli ,come in questo caso per esempio abbiamo il protocollo (ftp) versione (vsftpd 2.3.4)
+
+-con sudo nmap -O 192.168.50.101, si è avviata la scansione di tipo fingerprint ,che oltre alle porte aprerte ci restituisce il sistema operativo ,in questo caso Linux 2.6.X
+
+-La differenza che si può notare tra una scansione SYN e la scansione TCP connect , che la prima ha bisogno si esssere eseguita da superuser , mentre la seconda no , l'altra differenza sta nella linea "Not shown :977 closed tcp ports(reset)" per la SYN con il reset a indicare che è la connessione essendo una scansione SYN è "half-open"che vuol dire che non ha completato il 3way-handshaking ,ma conclude la comunicazione inviando un pacchetto RST(reset)risultando così più stealth e generando meno "rumore" a livello di rete,mentre la connessione TCP connect riporta "Not shown :977 closed TCP ports(conn-refused) a indicare che la connessione è stata rifiutata ,dal momento che le porte sono chiuse.
+
+Windows XP
+-con sudo nmap -O 192.168.50.102, si è avviata la scansione di tipo fingerprint o anche detta osdetection che ci restituisce oltre alle porte aperte il sistema operativo , in questo caso la scansione ci dice che potrebbe essere Windows XP SP2 o Windows SP3
